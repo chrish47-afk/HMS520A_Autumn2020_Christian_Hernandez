@@ -64,7 +64,7 @@ regress_group_data <- function(data, group_id, obs, covs, include_intercept = TR
 #WHO Global Tuberculosis Report(denoted as df_tb)
 WHO_data <- tidyr::who %>% data.table()
 
-# (1) - df_tb(Following Instructions)
+# (1) - df_tb(Following Instructions) -------------------------------------------------
 # Following instructions from section 12.6, cleaning df_tb
 who1 <- WHO_data %>% 
   pivot_longer(
