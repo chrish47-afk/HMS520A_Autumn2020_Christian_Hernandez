@@ -1,5 +1,5 @@
-library(dplyr)
-library(data.table)
+#library(dplyr)
+#library(data.table)
 # data - data frame that contains all the information
 # group_id - A vector with one or multiple column names that uniquely define the groups.
 # obs - A vector with one or multiple column names of targeting observations
@@ -18,7 +18,7 @@ library(data.table)
 #' @return A data fram with group_id columns and all the summary stats
 #' @export
 #'
-#' @examples summarise_group_data(data = iris, group_id = 'Species', obs = c('Petal.Length', 'Sepal.Length'), fun = sd)
+#' @examples
 summarise_group_data <- function(data, group_id, obs, fun, ...){
   data %>%
     group_by_at(group_id) %>%

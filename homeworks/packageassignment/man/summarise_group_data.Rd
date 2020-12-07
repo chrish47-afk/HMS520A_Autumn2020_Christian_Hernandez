@@ -23,6 +23,3 @@ A data fram with group_id columns and all the summary stats
 \description{
 Summarize your data frame
 }
-\examples{
-summarise_group_data(data = iris, group_id = 'Species', obs = c('Petal.Length', 'Sepal.Length'), fun = sd)
-}
