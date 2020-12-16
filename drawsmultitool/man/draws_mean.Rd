@@ -22,5 +22,5 @@ A data table with mean for draws, for the specified year.
 Calculates mean of get_draws for specified years
 }
 \examples{
-draws_mean(draws = get_draws, pops = get_population, locs = get_location_metadata, year_id = "2015" )
+draws_mean(draws = get_draws, pops = get_population, locs = get_location_metadata, year_id = "2015")
 }

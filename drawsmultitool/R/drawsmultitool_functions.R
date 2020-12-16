@@ -2,16 +2,16 @@
 
 #' Merges Value and Uncertainty values into one single cell
 #'
-#' @param col_name
-#' @param dt
-#' @param decimals
-#' @param ...
+#' @param col_name Common column header for all three columns. Format 'col_name_val'.
+#' @param dt A data table with the three columns you want to merge.
+#' @param decimals Decimal places.
 #'
-#' @return
+#' @return A data table with the merged columns specified.
 #' @export
 #'
 #' @examples
-publish_column_cell<-function(col_name,dt,decimals, ...){
+#' publish_column_cell(col_name = "pct", dt = dt, decimals = 0 )
+publish_column_cell<-function(col_name,dt,decimals){
   # Breakpoints
   if(!paste0(col_name,"_val") %in% colnames(dt)){
     stop("Error: In your dataset make sure that the following column format is included, 'pct_value', pct will be specified by the col_name argument - col_name can be any label, as long as its included in your data.")
@@ -28,11 +28,26 @@ publish_column_cell<-function(col_name,dt,decimals, ...){
   dt[,(col_name):= paste0(trimws(format(round(get(paste0(col_name,"_val")), decimals), big.mark = "")), "\n(",
                           trimws(format(round(get(paste0(col_name,"_lower")), decimals), big.mark = "")), " to ",
                           trimws(format(round(get(paste0(col_name,"_upper")), decimals), big.mark = "")), ")")]
+
+  #Clean up
   delete_cols<-paste0(col_name,c("_val","_lower","_upper"))
   dt[,(delete_cols):=NULL]
   return(dt)
 }
 
+#' Calculates percent change of get_draws for specified years
+#'
+#' @param draws A get_draws data set.
+#' @param pops A get_population data set.
+#' @param locs A get_location_metadata data set.
+#' @param year_start The desired year_start for percent change.
+#' @param year_end The desired year_end for percent change.
+#'
+#' @return A data table with percent change for draws, for the specified years.
+#' @export
+#'
+#' @examples
+#' draws_percent_change(draws = get_draws, pops = get_population, locs = get_location_metadata, year_start = "1980", year_end = "2015")
 draws_percent_change <- function(draws, pops, locs, year_start, year_end){
   # Breakpoints -------------------------------
   if(!is.character(year_start)){
@@ -78,6 +93,18 @@ draws_percent_change <- function(draws, pops, locs, year_start, year_end){
     as.data.table()
 }
 
+#' Calculates mean of get_draws for specified years
+#'
+#' @param draws A get_draws data set.
+#' @param pops A get_population data set.
+#' @param locs A get_location_metadata data set.
+#' @param year_id The specified single year_id.
+#'
+#' @return A data table with mean for draws, for the specified year.
+#' @export
+#'
+#' @examples
+#' draws_mean(draws = get_draws, pops = get_population, locs = get_location_metadata, year_id = "2015")
 draws_mean <- function(draws, pops, locs, year_id){
   # Breakpoints --------------------------
   if(!is.character(year_id)){
