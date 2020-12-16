@@ -96,7 +96,7 @@ draws_percent_change <- function(draws, pops, locs, year_start, year_end){
 #' Calculates mean of get_draws for specified years
 #'
 #' @param draws A get_draws data set.
-#' @param pops A get_population data set.
+#' @param pops A get population data set.
 #' @param locs A get_location_metadata data set.
 #' @param year_id The specified single year_id.
 #'
@@ -117,7 +117,7 @@ draws_mean <- function(draws, pops, locs, year_id){
   # Selection
   locs <- select(locs, location_id)
   pops <- select(pops, age_group_id, location_id, year_id, sex_id, population)
-  pct_change <- "mean"
+  #pct_change <- "mean"
 
   # Melting & Casting -------------------------
   final_draws <- draws %>% melt(id.vars = c("age_group_id", "location_id", "sex_id", "year_id", "measure_id", "cause_id", "metric_id"))
@@ -135,12 +135,12 @@ draws_mean <- function(draws, pops, locs, year_id){
     names(final)[grepl("draw", names(final))],
     names(final)[grepl("draw", names(final))==FALSE])]
   #Lower and Upper UI's, using the apply function instead of a loop.
-  final <- mutate(final, pct_val = rowMeans(final[,1:1000], na.rm = T))
-  final <- mutate(final, pct_lower = apply(final[,1:1000], 1, quantile, probs=0.025, na.rm = T))
-  final <- mutate(final, pct_upper = apply(final[,1:1000], 1, quantile, probs=0.975, na.rm = T))
+  final <- mutate(final, mean_val = rowMeans(final[,1:1000], na.rm = T))
+  final <- mutate(final, mean_lower = apply(final[,1:1000], 1, quantile, probs=0.025, na.rm = T))
+  final <- mutate(final, mean_upper = apply(final[,1:1000], 1, quantile, probs=0.975, na.rm = T))
 
   # Final Conversion ----------------------------
-  final <- final %>% select(age_group_id, sex_id, location_id, cause_id, measure_id, metric_id, year_id, pct_val, pct_lower, pct_upper) %>%
+  final <- final %>% select(age_group_id, sex_id, location_id, cause_id, measure_id, metric_id, year_id, mean_val, mean_lower, mean_upper) %>%
     as.data.table()
 }
 

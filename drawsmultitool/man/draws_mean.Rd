@@ -9,7 +9,7 @@ draws_mean(draws, pops, locs, year_id)
 \arguments{
 \item{draws}{A get_draws data set.}
 
-\item{pops}{A get_population data set.}
+\item{pops}{A get population data set.}
 
 \item{locs}{A get_location_metadata data set.}
 
