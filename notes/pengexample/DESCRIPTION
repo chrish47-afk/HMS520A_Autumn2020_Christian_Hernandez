@@ -1,0 +1,17 @@
+Package: pengexample
+Title: Practice example from Peng for with a summary and Regression function
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Simple summary and regression functions from Peng's processing example
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat

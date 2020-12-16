@@ -22,7 +22,6 @@ library(data.table)
 library(tidyr)
 library(reshape)
 library(ggplot2)
-#library(broom)
 ###############################################################################################
 #Problem 1
 ###############################################################################################
@@ -58,8 +57,6 @@ regress_group_data <- function(data, group_id, obs, covs, include_intercept = TR
   return(final_ni)
 }
 
-data(iris)
-regress_group_data(iris, group_id = 'Species', obs = 'Petal.Length', covs = c('Sepal.Length', 'Petal.Width'), include_intercept = TRUE)
 
 ###############################################################################################
 #Problem 3
@@ -67,7 +64,7 @@ regress_group_data(iris, group_id = 'Species', obs = 'Petal.Length', covs = c('S
 #WHO Global Tuberculosis Report(denoted as df_tb)
 WHO_data <- tidyr::who %>% data.table()
 
-# (1) - df_tb(Following Instructions)
+# (1) - df_tb(Following Instructions) -------------------------------------------------
 # Following instructions from section 12.6, cleaning df_tb
 who1 <- WHO_data %>% 
   pivot_longer(
@@ -120,7 +117,7 @@ WHO_data_mod <- WHO_data %>%
 who5 # Part by Part
 WHO_data #Script
 
-# (2)  - Same Procedure for The World Bank Population
+# (2)  - Same Procedure for The World Bank Population---------------------------------------
 
 # NOTE - All these files were sourced locally, and not through the cluster. Hence, same files must be sourced everytime this code is processed. 
 # No Edits - Original File. (RAW FILE)
@@ -131,12 +128,12 @@ WB_data$`Country Code` <- NULL
 WB_data$`Indicator Name` <- NULL
 WB_data$`Indicator Code` <- NULL
 
-#Melting Data
+#Melting Data, instead of using pivot_longer
 WB_data_mod <- melt(WB_data, id = "Country Name")
 #IMPORTANT NOTE: melt( ) can also work, instead of using pivot_longer. If this alternative way is used, it will do it by year instead of by Country Name. 
 
 
-# (3) - Inner_join and Incident Ratios. 
+# (3) - Merging Data, instead of inner_join-------------------------------------------------- 
 #Changing names to properly get both tables to efficiently have the same column names.
 WHO_data_mod <- setnames(WHO_data_mod, old = "country", new = "Country Name")
 WB_data_mod <- setnames(WB_data_mod, old = c("variable", "value"), new = c("year", "pop"))
@@ -146,11 +143,11 @@ WB_data_mod <- setnames(WB_data_mod, old = c("variable", "value"), new = c("year
 incidence_ratios <- merge(WHO_data_mod, WB_data_mod, by = c("Country Name", "year"))
 incidence_ratios$ratios <- (incidence_ratios$cases/incidence_ratios$pop)
 
-# (4) - Regression Coefficients
+# (4) - Regression Coefficients--------------------------------------------------------------
 WHO_WB_data <- regress_group_data(data = incidence_ratios, group_id = 'Country Name', obs = 'ratios', covs = 'year', include_intercept = TRUE)
 WHO_WB_data <- setnames(WHO_WB_data, old = 'Country Name', new = 'CountryName')
 
-# (5) - Bar Plot
+# (5) - Bar Plot-----------------------------------------------------------------------------
 ggplot(WHO_WB_data, aes(x = reorder(CountryName, -year), y = year)) + #Adjusting data order
   geom_bar(position = "dodge", stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
