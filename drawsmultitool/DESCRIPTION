@@ -1,0 +1,15 @@
+Package: drawsmultitool
+Title: A multitool for processing IHME-specific get_draws
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Christian",
+           family = "Hernandez",
+           role = c("aut", "cre"),
+           email = "chrish47@uw.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: The purpose of this package is to facilitate the processing of get_draws for presentation, publication, and vetting usability. In contrast to get_outputs and get_pct_change, which return a 'mean' summary, get_draws return the mean of the 1000 change draws. By using get_draws we can conduct a variety of calculations and vet the meand draws. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
