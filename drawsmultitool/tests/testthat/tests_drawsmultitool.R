@@ -1,17 +1,16 @@
-# Tests
-#library(testthat)
+
 
 test_that("publish_column_cell", {
-  #expect_equal(publish_column_cell(col_name, "pct"))
-  #expect_equal(publish_column_cell(col_name, "mean"))
+
   expect_error(publish_column_cell(col_name = pct))
   expect_error(publish_column_cell(decimals = "a"))
 })
 
-# draws_percent_change
-#test_that("draws_percent_change", {
-#})
+test_that("draws_percent_change",{
+  expect_error(draws_percent_change(year_start = 1990))
+  expect_error(drwas_percent_change(year_end = 2015))
 
-# draws_mean
-#test_that("draws_mean", {
-#})
+})
+
+
+# Avoid testing simple code that you're confident will work. Instead focus your time one code that you're not sure about, is fragile, or had complicated interdependecies.
